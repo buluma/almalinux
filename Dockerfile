@@ -1,4 +1,4 @@
-FROM almalinux:8
+FROM almalinux:9
 ENV container=docker
 
 # Install systemd -- See https://hub.docker.com/_/centos/
