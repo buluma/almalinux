@@ -37,7 +37,7 @@ jobs:
         platforms: linux/amd64
         push: false
         load: true
-        tags: ${{ env.IMAGE_NAME }}:9
+        tags: ${{ env.IMAGE_NAME }}:8
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -69,4 +69,4 @@ jobs:
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ github.repository }}:9, ${{ github.repository }}:latest
+          tags: ${{ github.repository }}:8
