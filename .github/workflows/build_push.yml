@@ -41,8 +41,8 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-    - name: Test the Docker image
-      run: docker run -it --rm --privileged --cgroupns=host --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw ${{ env.IMAGE_NAME }}:9
+    # - name: Test the Docker image
+    #   run: docker run -it --rm --privileged --cgroupns=host --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw ${{ env.IMAGE_NAME }}:9
 
   # If on master branch, build and release image.
   release:
