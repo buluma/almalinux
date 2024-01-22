@@ -44,30 +44,6 @@ jobs:
     # - name: Test the Docker image
     #   run: docker run -it --rm --privileged --cgroupns=host --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw ${{ env.IMAGE_NAME }}:9
 
-  automerge:
-    needs:
-      - lint
-      - test
-    runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'renovate[bot]' || github.actor == 'buluma' && github.event_name == 'pull_request'}}
-    steps:
-      - uses: "actions/checkout@master"
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Approve a PR
-        run: gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: "Merge Dependabot PR"
-        run: gh pr merge --auto --merge "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   # If on master branch, build and release image.
   release:
     name: Release
@@ -75,12 +51,11 @@ jobs:
     needs: 
       - lint
       - test
-      - automerge
     if: github.ref == 'refs/heads/master'
 
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v1
+      - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
 
       - name: Login to DockerHub
