@@ -37,12 +37,12 @@ jobs:
         platforms: linux/amd64
         push: false
         load: true
-        tags: ${{ env.IMAGE_NAME }}:8
+        tags: ${{ env.IMAGE_NAME }}:9
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
     - name: Test the Docker image
-      run: dgoss run -it --rm --privileged --cgroupns=host --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw ${{ env.IMAGE_NAME }}:test
+      run: docker run -it --rm --privileged --cgroupns=host --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw ${{ env.IMAGE_NAME }}:9
 
   # If on master branch, build and release image.
   release:
@@ -63,7 +63,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push image.
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: Dockerfile
