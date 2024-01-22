@@ -49,7 +49,7 @@ jobs:
       - lint
       - test
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' || ${{ github.actor == 'renovate[bot]' || github.actor == 'buluma' && github.event_name == 'pull_request'}}
+    if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'renovate[bot]' || github.actor == 'buluma' && github.event_name == 'pull_request'}}
     steps:
       - uses: "actions/checkout@master"
       - name: Dependabot metadata
